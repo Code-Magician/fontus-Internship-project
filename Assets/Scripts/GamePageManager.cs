@@ -16,7 +16,7 @@ public class GamePageManager : MonoBehaviour
 
         cam = Camera.main;
         edgeCollider = GetComponent<EdgeCollider2D>();
-        edgePoints = new Vector2[5];
+        edgePoints = new Vector2[4];
         AddEdgeColliders();
         AddBackground();
     }
@@ -31,11 +31,10 @@ public class GamePageManager : MonoBehaviour
         Vector2 bottomRightEdge = new Vector2(topRightEdge.x, bottomLeftEdge.y);
         Vector2 topLeftEdge = new Vector2(bottomLeftEdge.x, topRightEdge.y);
 
-        edgePoints[0] = bottomLeftEdge;
-        edgePoints[1] = bottomRightEdge;
-        edgePoints[2] = topRightEdge;
-        edgePoints[3] = topLeftEdge;
-        edgePoints[4] = bottomLeftEdge;
+        edgePoints[0] = topLeftEdge;
+        edgePoints[1] = bottomLeftEdge;
+        edgePoints[2] = bottomRightEdge;
+        edgePoints[3] = topRightEdge;
 
         edgeCollider.points = edgePoints;
     }
@@ -43,6 +42,7 @@ public class GamePageManager : MonoBehaviour
     private void AddBackground()
     {
         GameObject bgGameObj = new GameObject("Background");
+
         SpriteRenderer renderer = bgGameObj.AddComponent<SpriteRenderer>();
         renderer.sprite = bgSprite;
         renderer.drawMode = SpriteDrawMode.Sliced;
