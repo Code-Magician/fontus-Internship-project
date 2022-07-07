@@ -4,21 +4,50 @@ using UnityEngine;
 
 public class PlayerView : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D rb;
+    #region PRIVATE FIELDS
+
+    /// <summary>
+    /// Stores the reference of Player Controller.
+    /// </summary>
     private PlayerController controller;
+
+    /// <summary>
+    /// Gets the reference of player rigidbody from the inspector.
+    /// </summary>
+    [SerializeField] Rigidbody2D rb;
 
 
     Touch startTouch, endTouch;
     float pressTime = 0;
     bool isGrounded;
 
+    #endregion
 
+
+    #region PRIVATE FIELD GETTERS
+
+    /// <summary>
+    /// Getter for rigidbody of player
+    /// </summary>
     public Rigidbody2D GetRigidBody
     {
         get => rb;
     }
 
+    #endregion
+
+
+    #region PRIVATE METHODS
+
     private void Update()
+    {
+        HandlePlayerInput();
+    }
+
+    /// <summary>
+    /// Foeach touch input this function performs movement of player of jumping of player if they satisfy the valid input conditions.
+    /// </summary>
+    private void HandlePlayerInput()
     {
         for (int i = 0; i < Input.touchCount; i++)
         {
@@ -40,6 +69,15 @@ public class PlayerView : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// chekcs if the swipe is valid up swipe or not.
+    /// swipe is valid up swipe if it's start y position is less then ending y position.
+    /// swipe length is greater or equal to provided length and
+    /// swipe length in vertical direction is greater then swipe length in horizontal direction.
+    /// </summary>
+    /// <param name="index">it's the Touch index.</param>
+    /// <returns></returns>
     private bool IsValidSwipe(int index)
     {
         Touch touch = Input.GetTouch(index);
@@ -53,7 +91,7 @@ public class PlayerView : MonoBehaviour
             endTouch = touch;
         }
 
-        bool validLength = Vector2.Distance(startTouch.position, endTouch.position) >= (Screen.height * controller.model.validSwipePercent / 100);
+        bool validLength = Vector2.Distance(startTouch.position, endTouch.position) >= (Screen.height * controller.Model.validSwipePercent / 100);
         bool isUpSwipe = (Mathf.Abs(startTouch.position.x - endTouch.position.x) < Mathf.Abs(startTouch.position.y - endTouch.position.y)) &&
                         (startTouch.position.y < endTouch.position.y);
 
@@ -68,6 +106,14 @@ public class PlayerView : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Handles player movement.
+    /// if the player touches on left side of screen then it makes player move to left and vice versa.
+    /// the movement starts after touchHoldTime provided.
+    /// when the player has tapped on the screen(touch phase is began).
+    /// </summary>
+    /// <param name="index">It's the Touch index.</param>
+    /// <returns></returns>
     private bool Movement(int index)
     {
         Touch touch = Input.GetTouch(index);
@@ -80,14 +126,14 @@ public class PlayerView : MonoBehaviour
             pressTime = 0;
         }
 
-        if (pressTime >= controller.model.touchHoldTime)
+        if (pressTime >= controller.Model.touchHoldTime)
         {
             Vector2 touchPos = touch.position;
 
             if (touchPos.x >= Screen.width / 2f)
-                controller.Move(1);
+                controller.Move(multiplier: 1);
             else
-                controller.Move(-1);
+                controller.Move(multiplier: -1);
             return true;
         }
 
@@ -102,9 +148,19 @@ public class PlayerView : MonoBehaviour
         }
     }
 
+    #endregion
 
+
+    #region PUBLIC METHODS
+
+    /// <summary>
+    /// Used to set the playerController variable in this class.
+    /// </summary>
+    /// <param name="_controller">Reference to the player Controller</param>
     public void SetPlayerController(PlayerController _controller)
     {
         controller = _controller;
     }
+
+    #endregion
 }

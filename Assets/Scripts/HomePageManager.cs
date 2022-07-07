@@ -5,8 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class HomePageManager : MonoBehaviour
 {
-    public void GotoGameScene()
+    #region PUBLIC METHODS
+
+    /// <summary>
+    /// loads the scene using the name of the scene.
+    /// </summary>
+    /// <param name="sceneName">scene name (in string) to be loaded.</param>
+    public void GotoGameScene(string sceneName)
     {
-        SceneManager.LoadScene("Gameplay");
+        SceneManager.LoadScene(sceneName);
     }
+
+    #endregion
 }

@@ -4,11 +4,32 @@ using UnityEngine;
 
 public class GamePageManager : MonoBehaviour
 {
+    #region PRIVATE FIELDS
+
+    /// <summary>
+    /// stores the reference of the main camera.
+    /// </summary>
     private Camera cam;
+
+    /// <summary>
+    /// Stores the reference of the edge colliders
+    /// </summary>
     private EdgeCollider2D edgeCollider;
+
+    /// <summary>
+    /// Stores all the edgePoints used by the edge collider.
+    /// </summary>
     private Vector2[] edgePoints;
 
+    /// <summary>
+    /// Gets the reference of the background sprite to be used from the inspector.
+    /// </summary>
     [SerializeField] Sprite bgSprite;
+
+    #endregion
+
+
+    #region  PRIVATE METHODS
 
     private void Awake()
     {
@@ -17,6 +38,14 @@ public class GamePageManager : MonoBehaviour
         cam = Camera.main;
         edgeCollider = GetComponent<EdgeCollider2D>();
         edgePoints = new Vector2[4];
+        BuildGameScene();
+    }
+
+    /// <summary>
+    /// Builds the game enviroment.
+    /// </summary>
+    private void BuildGameScene()
+    {
         AddEdgeColliders();
         AddBackground();
     }
@@ -39,6 +68,9 @@ public class GamePageManager : MonoBehaviour
         edgeCollider.points = edgePoints;
     }
 
+    /// <summary>
+    /// Makes new Gameobject. Adds spriterenderer to it and expands it's size to fit the screen.
+    /// </summary>
     private void AddBackground()
     {
         GameObject bgGameObj = new GameObject("Background");
@@ -51,4 +83,6 @@ public class GamePageManager : MonoBehaviour
         bgGameObj.transform.position = new Vector2(0, 0);
         bgGameObj.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
+
+    #endregion
 }

@@ -4,18 +4,52 @@ using UnityEngine;
 
 public class PlayerModel
 {
-    private PlayerController controller;
-    public float jumpForce;
-    public float movementSpeed;
+    #region PRIVATE FIELDS
+
     /// <summary>
-    /// The amount of time (in seconds) the touch should be holded to make the player move.
+    /// Stores Reference of PlayerController
+    /// </summary>
+    private PlayerController controller;
+
+    #endregion
+
+
+    #region PUBLIC FIELDS
+
+    /// <summary>
+    /// Stores Player jumpForce magnitude.
+    /// </summary>
+    public float jumpForce;
+
+    /// <summary>
+    /// Stores Player movementSpeed magnitude.
+    /// </summary>
+    public float movementSpeed;
+
+    /// <summary>
+    /// Stores the amount of time the player have to hold the screen to make that input a valid movement input.
     /// </summary>
     public float touchHoldTime;
+
     /// <summary>
-    /// We pass the percentage here. if the swipe length is equal to or greater then the validSwipePercent amount of ScreenHeight then it's considered a valid swipe.
+    /// Stores the percentage amount which is used to check if the Swipe is valid or not.
+    /// Let us assume this amount is 25%. then we calculate 25% of the screen height.
+    /// if our swipe length will be greater then this calculated amount then it's considered a valid swipe else invalid.
     /// </summary>
     public float validSwipePercent;
 
+    #endregion
+
+
+    #region  PUBLIC METHODS
+
+    /// <summary>
+    /// Constructor used to set the reference of the variables.
+    /// </summary>
+    /// <param name="_jumpForce">Reference to jump force magnitude.</param>
+    /// <param name="_movementSpeed">Reference to movement speed magnitude.</param>
+    /// <param name="_validSwipePercent">Reference to validSwipe percentage magnitude.</param>
+    /// <param name="_touchHoldTime">Reference to touch hold time magnitude.</param>
     public PlayerModel(float _jumpForce, float _movementSpeed, float _validSwipePercent, float _touchHoldTime)
     {
         jumpForce = _jumpForce;
@@ -24,8 +58,14 @@ public class PlayerModel
         touchHoldTime = _touchHoldTime;
     }
 
+    /// <summary>
+    /// Used to set the playerController variable in this class.
+    /// </summary>
+    /// <param name="_controller">Reference to the player Controller</param>
     public void SetPlayerController(PlayerController _controller)
     {
         controller = _controller;
     }
+
+    #endregion
 }
