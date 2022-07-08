@@ -17,8 +17,8 @@ public class BallSpawner : MonoBehaviour
 
     private void SpawnBall()
     {
-        float xLeft = ScreenUtil.BottomLeft.x + ballCollider.radius;
-        float xRight = ScreenUtil.TopRight.x - ballCollider.radius;
+        float xLeft = ScreenUtil.BottomLeft.x + 2 * ballCollider.radius;
+        float xRight = ScreenUtil.TopRight.x - 2 * ballCollider.radius;
         float yUp = ScreenUtil.TopRight.y + 2 * ballCollider.radius;
 
         Vector2 spawnPos = new Vector2(UnityEngine.Random.Range(xLeft, xRight), yUp);
