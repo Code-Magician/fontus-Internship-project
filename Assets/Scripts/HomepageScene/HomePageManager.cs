@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class HomePageManager : MonoBehaviour
 {
@@ -29,6 +30,15 @@ public class HomePageManager : MonoBehaviour
     public void GotoGameScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     #endregion

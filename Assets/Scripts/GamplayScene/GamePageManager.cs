@@ -19,6 +19,11 @@ public class GamePageManager : MonoBehaviour
     private bool gameOver = false;
 
     /// <summary>
+    /// Stores Game over Sounnd clip.
+    /// </summary>
+    [SerializeField] AudioClip gameoverClip;
+
+    /// <summary>
     /// stores the reference of the main camera.
     /// </summary>
     private Camera cam;
@@ -221,6 +226,8 @@ public class GamePageManager : MonoBehaviour
     /// </summary>
     private void Gameover()
     {
+        AudioManager.instance.PlaySfx(gameoverClip, 1f);
+
         Time.timeScale = 0;
         gameOver = true;
 

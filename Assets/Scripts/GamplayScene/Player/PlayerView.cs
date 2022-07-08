@@ -185,6 +185,14 @@ public class PlayerView : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+    }
+
     #endregion
 
 
