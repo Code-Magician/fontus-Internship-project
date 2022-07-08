@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GamePageManager : MonoBehaviour
 {
+    public static GamePageManager instance;
+
     #region PRIVATE FIELDS
 
     /// <summary>
@@ -26,6 +30,26 @@ public class GamePageManager : MonoBehaviour
     /// </summary>
     [SerializeField] Sprite bgSprite;
 
+    /// <summary>
+    /// Stores the reference of the Text UI which displays the current score.
+    /// </summary>
+    [SerializeField] Text scoreUI_Text;
+
+    /// <summary>
+    /// Prefix of the displayed text.
+    /// </summary>
+    private string scoreUI_TextPrefix = "Score : ";
+
+    #endregion
+
+
+    #region PUBLIC METHODS
+
+    /// <summary>
+    /// Stores the game's Current session score.
+    /// </summary>
+    public int score = 0;
+
     #endregion
 
 
@@ -33,6 +57,10 @@ public class GamePageManager : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
+
+        AudioManager.instance.PlayBgMusic(0.5f);
+
         ScreenUtil.Initialize();
 
         cam = Camera.main;
@@ -82,6 +110,29 @@ public class GamePageManager : MonoBehaviour
 
         bgGameObj.transform.position = new Vector2(0, 0);
         bgGameObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    #endregion
+
+
+    #region PUBLIC METHODS
+
+    /// <summary>
+    /// loads the scene using the name of the scene.
+    /// </summary>
+    /// <param name="sceneName">scene name (in string) to be loaded.</param>
+    public void GotoScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    /// <summary>
+    /// Updates the score on the UI.
+    /// </summary>
+    public void AddPoints(int points)
+    {
+        score += points;
+        scoreUI_Text.text = scoreUI_TextPrefix + score.ToString("00");
     }
 
     #endregion

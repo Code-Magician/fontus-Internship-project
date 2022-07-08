@@ -60,5 +60,14 @@ public class PlayerController
         view.GetRigidBody.velocity = newVelocity;
     }
 
+    /// <summary>
+    /// Stops the movement of the player in x direction.
+    /// </summary>
+    public void StopMovementInX()
+    {
+        Vector2 newVelocity = new Vector2(0, view.GetRigidBody.velocity.y);
+        view.GetRigidBody.velocity = newVelocity;
+    }
+
     #endregion
 }

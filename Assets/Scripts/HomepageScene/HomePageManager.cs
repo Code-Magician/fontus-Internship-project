@@ -5,6 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class HomePageManager : MonoBehaviour
 {
+    #region PRIVATE FUNCTIONS
+
+    private void Awake()
+    {
+        AudioManager.instance.PlayBgMusic(0.5f);
+    }
+
+    #endregion
+
+
     #region PUBLIC METHODS
 
     /// <summary>

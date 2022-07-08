@@ -45,7 +45,7 @@ public class PlayerView : MonoBehaviour
     }
 
     /// <summary>
-    /// Foeach touch input this function performs movement of player of jumping of player if they satisfy the valid input conditions.
+    /// Foeach touch input this function performs movement of player and jumping of player if it satisfies the valid input conditions.
     /// </summary>
     private void HandlePlayerInput()
     {
@@ -124,6 +124,7 @@ public class PlayerView : MonoBehaviour
         else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
         {
             pressTime = 0;
+            if (isGrounded) controller.StopMovementInX();
         }
 
         if (pressTime >= controller.Model.touchHoldTime)
