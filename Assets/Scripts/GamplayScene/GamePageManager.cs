@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class GamePageManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class AudioClips
-    {
-
-    }
     public static GamePageManager instance;
+    public event EventHandler OnStartTimerOver;
+
 
     #region PRIVATE FIELDS
+
+    /// <summary>
+    /// Boolean to let the manager know if game is over or not.
+    /// </summary>
+    private bool gameOver = false;
 
     /// <summary>
     /// stores the reference of the main camera.
@@ -41,19 +44,49 @@ public class GamePageManager : MonoBehaviour
     [SerializeField] Text scoreUI_Text;
 
     /// <summary>
-    /// Prefix of the displayed text.
+    /// Prefix of the displayed score text.
     /// </summary>
     private string scoreUI_TextPrefix = "Score : ";
 
-    #endregion
+    /// <summary>
+    /// Stores the reference of the Text UI which displays the Game start timer.
+    /// </summary>
+    [SerializeField] Text gameStartTimerText;
 
-
-    #region PUBLIC METHODS
+    /// <summary>
+    /// Amount of time in seconds to wait before the game starts.
+    /// </summary>
+    [SerializeField] int gameStartTimerMagnitude;
 
     /// <summary>
     /// Stores the game's Current session score.
     /// </summary>
-    public int score = 0;
+    private int score = 0;
+
+    /// <summary>
+    /// Number of ball miss allowed.
+    /// </summary>
+    [SerializeField] int lives;
+
+    /// <summary>
+    /// Prefix of the displayed lives text.
+    /// </summary>
+    private string playerLivesTextPrefix = "Lives : ";
+
+    /// <summary>
+    /// Stores the reference of the Text UI which displays the remaining lives of player.
+    /// </summary>
+    [SerializeField] Text playerLivesText;
+
+    /// <summary>
+    /// Stores the gameobject of gameover panel which will be displayed when player run out of lives.
+    /// </summary>
+    [SerializeField] GameObject GameoverPanel;
+
+    /// <summary>
+    /// final score to be displayed when player run out of lives.
+    /// </summary>
+    [SerializeField] Text finalScoreText;
 
     #endregion
 
@@ -62,6 +95,7 @@ public class GamePageManager : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         instance = this;
 
         AudioManager.instance.PlayBgMusic(0.5f);
@@ -72,6 +106,24 @@ public class GamePageManager : MonoBehaviour
         edgeCollider = GetComponent<EdgeCollider2D>();
         edgePoints = new Vector2[4];
         BuildGameScene();
+        StartCoroutine(GameStartTimer());
+    }
+
+    /// <summary>
+    /// Handles the game timer, update timer UI and fires an OnStartTimerOver event.
+    /// </summary>
+    private IEnumerator GameStartTimer()
+    {
+        for (int i = gameStartTimerMagnitude; i >= 0; i--)
+        {
+            gameStartTimerText.text = i.ToString("0");
+
+            if (i != 0)
+                yield return new WaitForSeconds(1f);
+        }
+
+        gameStartTimerText.gameObject.SetActive(false);
+        OnStartTimerOver?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -81,6 +133,17 @@ public class GamePageManager : MonoBehaviour
     {
         AddEdgeColliders();
         AddBackground();
+        SetGameUI();
+    }
+
+    /// <summary>
+    /// Initializes the game UI text and other component to default.
+    /// </summary>
+    private void SetGameUI()
+    {
+        playerLivesText.text = playerLivesTextPrefix + lives.ToString("0");
+        scoreUI_Text.text = scoreUI_TextPrefix + score.ToString("00");
+        gameStartTimerText.text = gameStartTimerMagnitude.ToString("0");
     }
 
     /// <summary>
@@ -138,6 +201,31 @@ public class GamePageManager : MonoBehaviour
     {
         score += points;
         scoreUI_Text.text = scoreUI_TextPrefix + score.ToString("00");
+    }
+
+    /// <summary>
+    /// Reduces lives and updates the lives text in UI.
+    /// and when player run out of lives it calls game over screen to be displayed.
+    /// </summary>
+    public void ReduceLives()
+    {
+        lives -= 1;
+        playerLivesText.text = playerLivesTextPrefix + lives.ToString("0");
+
+        if (lives == 0)
+            Gameover();
+    }
+
+    /// <summary>
+    /// Sets the gameover panel and set gameover boolen to true.
+    /// </summary>
+    private void Gameover()
+    {
+        Time.timeScale = 0;
+        gameOver = true;
+
+        finalScoreText.text = scoreUI_TextPrefix + score.ToString("00");
+        GameoverPanel.SetActive(true);
     }
 
     #endregion

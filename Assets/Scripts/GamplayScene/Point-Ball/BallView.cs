@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class BallView : MonoBehaviour
 {
-    public event EventHandler OnCollision;
+    public event EventHandler OnCollisionWithPlayer;
+    public event EventHandler OnCollisionWithGround;
     public float ballSpeed;
     public AudioClip scoreClip;
     public AudioClip groundTouchClip;
@@ -20,11 +21,12 @@ public class BallView : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             AudioManager.instance.PlaySfx(scoreClip, 1f);
-            OnCollision?.Invoke(this, EventArgs.Empty);
+            OnCollisionWithPlayer?.Invoke(this, EventArgs.Empty);
         }
         else
         {
             AudioManager.instance.PlaySfx(groundTouchClip, 1f);
+            OnCollisionWithGround?.Invoke(this, EventArgs.Empty);
         }
         Destroy(this.gameObject);
     }

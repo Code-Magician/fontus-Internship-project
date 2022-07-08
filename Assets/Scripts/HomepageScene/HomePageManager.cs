@@ -7,6 +7,11 @@ public class HomePageManager : MonoBehaviour
 {
     #region PRIVATE FUNCTIONS
 
+    private void Awake()
+    {
+        Time.timeScale = 1;
+    }
+
     private void Start()
     {
         AudioManager.instance.PlayBgMusic(0.5f);

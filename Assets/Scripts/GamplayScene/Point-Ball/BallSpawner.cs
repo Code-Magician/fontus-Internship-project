@@ -12,7 +12,13 @@ public class BallSpawner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SpawnBall", 10f, 3f);
+        GamePageManager.instance.OnStartTimerOver += PeriodicBallSpawning;
+    }
+
+    public void PeriodicBallSpawning(object sender, EventArgs e)
+    {
+        GamePageManager.instance.OnStartTimerOver -= PeriodicBallSpawning;
+        InvokeRepeating("SpawnBall", 0, 3f);
     }
 
     private void SpawnBall()
@@ -25,7 +31,9 @@ public class BallSpawner : MonoBehaviour
 
         BallView ballView = Instantiate<BallView>(ball, spawnPos, Quaternion.identity);
 
-        ballView.OnCollision += AddPoints;
+        ballView.OnCollisionWithPlayer += AddPoints;
+        ballView.OnCollisionWithGround += ReduceLives;
+
         ballView.ballSpeed = UnityEngine.Random.Range(minBallSpeed, maxBallSpeed);
         ballView.scoreClip = scoreClip;
         ballView.groundTouchClip = groundTouchClip;
@@ -34,5 +42,10 @@ public class BallSpawner : MonoBehaviour
     private void AddPoints(object sender, EventArgs e)
     {
         GamePageManager.instance.AddPoints(1);
+    }
+
+    private void ReduceLives(object sender, EventArgs e)
+    {
+        GamePageManager.instance.ReduceLives();
     }
 }
