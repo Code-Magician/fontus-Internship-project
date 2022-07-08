@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,8 +6,19 @@ using System;
 
 public class GamePageManager : MonoBehaviour
 {
+    #region PUBLIC FIELDS
+
+    /// <summary>
+    /// Singleton intance of GamePageManager class.
+    /// </summary>
     public static GamePageManager instance;
+
+    /// <summary>
+    /// event fired when start game timer is over.
+    /// </summary>
     public event EventHandler OnStartTimerOver;
+
+    #endregion
 
 
     #region PRIVATE FIELDS

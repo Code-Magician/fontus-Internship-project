@@ -1,15 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 
 public class BallView : MonoBehaviour
 {
+    #region PUBLCI FIELDS
+
+    /// <summary>
+    /// Event fired when Ball collides with player.
+    /// </summary>
     public event EventHandler OnCollisionWithPlayer;
+
+    /// <summary>
+    /// Event fired when Ball collides with ground.
+    /// </summary>
     public event EventHandler OnCollisionWithGround;
+
+    /// <summary>
+    /// Downward speed of moving ball
+    /// </summary>
     public float ballSpeed;
+
+    /// <summary>
+    /// Audioclip played when ball collides with player.
+    /// </summary>
     public AudioClip scoreClip;
+
+    /// <summary>
+    /// Audioclip played when ball collides with ground.
+    /// </summary>
     public AudioClip groundTouchClip;
+
+    #endregion
+
+
+    #region PRIVATE FUNCTIONS
 
     private void Update()
     {
@@ -30,4 +54,6 @@ public class BallView : MonoBehaviour
         }
         Destroy(this.gameObject);
     }
+
+    #endregion
 }

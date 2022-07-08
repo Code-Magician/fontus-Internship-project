@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
@@ -32,6 +30,9 @@ public class HomePageManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    /// <summary>
+    /// Exits the game in both application build mode and editor mode.
+    /// </summary>
     public void ExitGame()
     {
 #if UNITY_EDITOR
