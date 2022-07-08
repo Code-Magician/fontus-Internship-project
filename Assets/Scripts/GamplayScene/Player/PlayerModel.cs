@@ -38,6 +38,11 @@ public class PlayerModel
     /// </summary>
     public float validSwipePercent;
 
+    /// <summary>
+    /// Stores player jump audio clip.
+    /// </summary>
+    public AudioClip jumpClip;
+
     #endregion
 
 
@@ -50,12 +55,14 @@ public class PlayerModel
     /// <param name="_movementSpeed">Reference to movement speed magnitude.</param>
     /// <param name="_validSwipePercent">Reference to validSwipe percentage magnitude.</param>
     /// <param name="_touchHoldTime">Reference to touch hold time magnitude.</param>
-    public PlayerModel(float _jumpForce, float _movementSpeed, float _validSwipePercent, float _touchHoldTime)
+    public PlayerModel(float _jumpForce, float _movementSpeed, float _validSwipePercent,
+                float _touchHoldTime, AudioClip _jumpClip)
     {
         jumpForce = _jumpForce;
         movementSpeed = _movementSpeed;
         validSwipePercent = _validSwipePercent;
         touchHoldTime = _touchHoldTime;
+        jumpClip = _jumpClip;
     }
 
     /// <summary>

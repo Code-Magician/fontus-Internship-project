@@ -31,6 +31,11 @@ public class PlayerSpawner : MonoBehaviour
     /// </summary>
     [SerializeField] float touchHoldTime;
 
+    /// <summary>
+    /// Player jump sound clip.
+    /// </summary>
+    [SerializeField] AudioClip jumpClip;
+
     #endregion
 
 
@@ -53,7 +58,12 @@ public class PlayerSpawner : MonoBehaviour
     /// </summary>
     public void SpawnPlayer()
     {
-        PlayerModel model = new PlayerModel(jumpForce, movementSpeed, validSwipePercent, touchHoldTime);
+        PlayerModel model = new PlayerModel(_jumpForce: jumpForce,
+        _movementSpeed: movementSpeed,
+        _validSwipePercent: validSwipePercent,
+        _touchHoldTime: touchHoldTime,
+        _jumpClip: jumpClip);
+
         PlayerView view = Instantiate<PlayerView>(player);
         PlayerController controller = new PlayerController(view, model);
     }

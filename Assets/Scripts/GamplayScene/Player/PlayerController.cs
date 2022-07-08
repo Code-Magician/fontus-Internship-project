@@ -47,6 +47,7 @@ public class PlayerController
     /// </summary>
     public void PlayerJump()
     {
+        AudioManager.instance.PlaySfx(model.jumpClip, 1f);
         view.GetRigidBody.AddForce(Vector2.up * model.jumpForce);
     }
 

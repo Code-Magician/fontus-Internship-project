@@ -170,6 +170,8 @@ MonoBehaviour:
   ballCollider: {fileID: 6747745416542096162, guid: d3fbecdf463e40746afaf2249aecd710, type: 3}
   minBallSpeed: 5
   maxBallSpeed: 15
+  scoreClip: {fileID: 8300000, guid: 7846b6349f98e524d924c7ea7d9072db, type: 3}
+  groundTouchClip: {fileID: 8300000, guid: f8ca8ed5060760747bf303ad0e4d7df9, type: 3}
 --- !u!1 &465671404
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +386,7 @@ MonoBehaviour:
   movementSpeed: 30
   validSwipePercent: 25
   touchHoldTime: 0.1
+  jumpClip: {fileID: 8300000, guid: f67f43a63b80a3f4e9bf5615c43107a2, type: 3}
 --- !u!4 &1110171639
 Transform:
   m_ObjectHideFlags: 0

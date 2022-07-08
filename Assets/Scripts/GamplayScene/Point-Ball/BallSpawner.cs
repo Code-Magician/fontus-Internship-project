@@ -8,6 +8,7 @@ public class BallSpawner : MonoBehaviour
     [SerializeField] BallView ball;
     [SerializeField] CircleCollider2D ballCollider;
     [SerializeField] float minBallSpeed, maxBallSpeed;
+    [SerializeField] AudioClip scoreClip, groundTouchClip;
 
     private void Start()
     {
@@ -23,13 +24,15 @@ public class BallSpawner : MonoBehaviour
         Vector2 spawnPos = new Vector2(UnityEngine.Random.Range(xLeft, xRight), yUp);
 
         BallView ballView = Instantiate<BallView>(ball, spawnPos, Quaternion.identity);
+
         ballView.OnCollision += AddPoints;
         ballView.ballSpeed = UnityEngine.Random.Range(minBallSpeed, maxBallSpeed);
+        ballView.scoreClip = scoreClip;
+        ballView.groundTouchClip = groundTouchClip;
     }
 
     private void AddPoints(object sender, EventArgs e)
     {
-        Debug.Log("Points Added");
         GamePageManager.instance.AddPoints(1);
     }
 }

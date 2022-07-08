@@ -7,6 +7,8 @@ public class BallView : MonoBehaviour
 {
     public event EventHandler OnCollision;
     public float ballSpeed;
+    public AudioClip scoreClip;
+    public AudioClip groundTouchClip;
 
     private void Update()
     {
@@ -17,7 +19,12 @@ public class BallView : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            AudioManager.instance.PlaySfx(scoreClip, 1f);
             OnCollision?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            AudioManager.instance.PlaySfx(groundTouchClip, 1f);
         }
         Destroy(this.gameObject);
     }

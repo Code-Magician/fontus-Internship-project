@@ -16,6 +16,16 @@ public class PlayerView : MonoBehaviour
     /// </summary>
     [SerializeField] Rigidbody2D rb;
 
+    /// <summary>
+    /// Gets the reference of the player animator component from the inspector.
+    /// </summary>
+    [SerializeField] Animator anim;
+
+    /// <summary>
+    /// Gets the reference of the player Sprite renderer from the instector.
+    /// </summary>
+    [SerializeField] SpriteRenderer spriteRenderer;
+
 
     Touch startTouch, endTouch;
     float pressTime = 0;
@@ -42,6 +52,29 @@ public class PlayerView : MonoBehaviour
     private void Update()
     {
         HandlePlayerInput();
+        HandlePlayerAnimations();
+    }
+
+
+    /// <summary>
+    /// Handles player run and idle animations based on the inputs given.
+    /// </summary>
+    private void HandlePlayerAnimations()
+    {
+        if (rb.velocity.x == 0) anim.SetBool("Run", false);
+        else
+        {
+            anim.SetBool("Run", true);
+
+            if (rb.velocity.x > 0)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else if (rb.velocity.x < 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+        }
     }
 
     /// <summary>
@@ -65,7 +98,6 @@ public class PlayerView : MonoBehaviour
                     controller.PlayerJump();
                 }
             }
-
         }
     }
 
@@ -132,9 +164,13 @@ public class PlayerView : MonoBehaviour
             Vector2 touchPos = touch.position;
 
             if (touchPos.x >= Screen.width / 2f)
+            {
                 controller.Move(multiplier: 1);
+            }
             else
+            {
                 controller.Move(multiplier: -1);
+            }
             return true;
         }
 

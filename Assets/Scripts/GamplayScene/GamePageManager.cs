@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class GamePageManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class AudioClips
+    {
+
+    }
     public static GamePageManager instance;
 
     #region PRIVATE FIELDS
